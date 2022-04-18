@@ -46,7 +46,7 @@
 ### 게임 진행
 `playGame()` - 게임을 진행하는 메인이 되는 함수
 
-```swift=
+```swift
 func playGame() {
     randomNumberAnswer = createRandomNumbers()
     isEnd = false
