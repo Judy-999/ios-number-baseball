@@ -76,7 +76,7 @@ func playGame() {
 <br/>
 
 ### 사용자 입력 오류처리
-```swift=
+```swift
 func validate(of input: [String]) -> [Int] {
     var checkOverlapSet = Set<String>()
     var correctInputCount: Int = 0
@@ -114,7 +114,7 @@ func validate(of input: [String]) -> [Int] {
 <br/>
 
 ### 스트라이크 개수 확인
-```swift=
+```swift
 func checkStrikeCount() -> Int {
     var strikeCount = 0
     for index in 0...2 where userInput[index] == randomNumberAnswer[index] {
@@ -131,7 +131,7 @@ func checkStrikeCount() -> Int {
 <br/>
 
 ### 볼 개수 확인
-```swift=
+```swift
 func checkBallCount() -> Int {
     var ballCount = 0
     for index in 0...2 where randomNumberAnswer.contains(userInput[index]) {
@@ -145,5 +145,70 @@ func checkBallCount() -> Int {
 <br/>
 
 ---
+
+## 🤔 고민과 해결
+
+### [ 이중들여쓰기 ]
+
+1. 함수로 분리 
+```swift
+while !isEnd {
+    ~
+    for randomNumber in randomNumbers{
+        print(randomNumber, terminator: " ")
+    }
+    ~
+}
+```
+
+랜덤 숫자들을 출력하는 단순한 부분이지만 반복문 속에 들어가 이중들여쓰기가 된 부분이다.
+
+```swift
+func printRandomNumber(_ numbers: [Int]){
+    for number in numbers{
+        print(number, terminator: " ")
+    }
+}
+
+while !isEnd {
+    ~
+      printRandomNumber(randomComputerInput)
+    ~
+}
+```
+출력하는 함수로 분리해서 재사용성과 가독성도 높이며 해결했다.
+
+2. 반목분과 조건문 결합
+```swift
+for index in 0...2 {
+    if randomNumberAnswer.contains(randomInput[index]) {
+        countList[1] += 1
+    }
+}
+```
+
+반복문을 돌며 특정 조건일 때 수행하고 싶은 코드가 있을 때 반복문 속 조건문이 되어 이중들여쓰기가 된 부분이다.
+
+```swift
+for index in 0...2 where randomNumberAnswer.contains(randomComputerInput[index]) {
+    ballCount += 1
+}
+```
+
+for문 뒤에 where을 붙여주면 where 절에 해당하는 요소만 반복하므로 들여쓰기 없이 한 줄로 쓸 수 있었다.
+<br/>
+
+### [ 네이밍과 코드 컨벤션 ]
+
+함수와 변수의 이름을 짓고, 코드의 컨벤션을 맞추고 통일하는 것에 많은 시간을 할애했다.
+쉬워보이면서도 리뷰에서 반복적으로 코멘트된 사항이다 🥲
+
+- 변수나 함수명에 타입이름이 들어가는 건 지양하기
+- 줄바꿈은 통일성 있게 하기
+- 비슷한 의미의 이름을 반복하지 않기
+- 타입 선언식도 가능한 통일하기
+- 출력문은 한 줄로 갈끔하게 하기
+
+등등 여러 조언을 받아 네이밍과 코드 컨벤션을 수정하였다.
 
 <br/><br/>

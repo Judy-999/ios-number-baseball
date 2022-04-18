@@ -59,10 +59,10 @@ func getUserInput() {
 }
 
 func validate(of input: [String]) -> [Int] {
-    var checkOverlapSet = Set<String>()
+    var checkedDuplicatedNumbers = Set<String>()
     var correctInputCount: Int = 0
     for input in input {
-        checkOverlapSet.insert(input)
+        checkedDuplicatedNumbers.insert(input)
     }
     let checkedInput: [Int] = input.map({ (number: String) -> Int in
         return Int(number) ?? -1
@@ -70,7 +70,7 @@ func validate(of input: [String]) -> [Int] {
     for checkedNumber in checkedInput where (1...9).contains(checkedNumber) {
         correctInputCount += 1
     }
-    guard checkOverlapSet.count == lengthOfGameAnswer,
+    guard checkedDuplicatedNumbers.count == lengthOfGameAnswer,
             input.count == lengthOfGameAnswer,
             correctInputCount == lengthOfGameAnswer
     else {
